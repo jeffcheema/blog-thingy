@@ -1,0 +1,13 @@
+{
+  "background_color": "#03a8ff",
+  "name": "Blog",
+  "short_name": "Blog",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "res/mipmap-xxhdpi/ic_launcher.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    }
+  ]
+}

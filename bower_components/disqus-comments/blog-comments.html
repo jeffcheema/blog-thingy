@@ -1,0 +1,34 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<!--
+`blog-comments`
+comments!
+
+@demo demo/index.html 
+-->
+
+<dom-module id="blog-comments">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]</h2>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'blog-comments',
+
+      properties: {
+        prop1: {
+          type: String,
+          value: 'blog-comments',
+        },
+      },
+
+    });
+  </script>
+</dom-module>

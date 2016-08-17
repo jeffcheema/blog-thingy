@@ -1,0 +1,13 @@
+{
+	"entrypoint": "index.html",
+	"shell": "src/blog-template-app/blog-template-app.html",
+	"fragments":[
+"src/blog-about.html"
+"src/blog-contact.html"
+"src/blog-page.html"
+"src/blog-posts.html"
+"src/blog.html"
+"src/elements.html"
+	]
+
+}

@@ -1,0 +1,103 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+    <link rel="import" href="../../elements.html">
+<dom-module id="blog-post">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      paper-card{
+      width:100%;
+      margin-top: 5%;
+      }
+
+    </style>
+   <paper-card heading="{{heading}}" image="{{image}}">
+  <div class="card-content">
+    {{preview}}
+  </div>
+   <div class="card-actions">
+    <a href="{{link}}"><paper-button onclick="{{onclick}}">Read More.</paper-button></a>
+
+  </div>
+
+</paper-card>
+
+
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'blog-post',
+
+      properties: {
+        heading:{
+type: String,
+notify: true,
+        },
+        image:{
+type: String,
+notify: true,
+        },
+        preview:{
+type: String,
+notify: true,
+        },
+        headerimage: {
+type: String,
+notify: true,
+        },
+        onclick:{
+type: String,
+notify: true,
+        },
+        postid: {
+type: String,
+notify: true,
+        },
+        content: {
+type: String,
+notify: true,
+        },
+
+
+      },
+ready: function(){
+  function removeExtension(filename){
+      var lastDotPosition = filename.lastIndexOf(".");
+      if (lastDotPosition === -1) return filename;
+      else return filename.substr(0, lastDotPosition);
+
+
+  }
+
+  fullPah = this.content;
+this.heading = fullPah.replace(/-/g, ' ');
+  fullPath = this.content;
+var file = fullPath.replace(/^.*(\\|\/|\:)/, '');
+this.heading = removeExtension(file);
+  var mdFile = new XMLHttpRequest();
+  mdFile.open("GET", this.content, true);
+  mdFile.onreadystatechange = function() {
+    if (mdFile.readyState === 4) {
+      if (mdFile.status === 200) {
+        allText = mdFile.responseText;
+
+      return mdFile.responseText;
+        lines = mdFile.responseText.split("\n");
+      }
+      else{
+        return "file not found 404. ";
+      }
+    }
+  }
+  mdFile.send(null);
+
+
+}
+    });
+
+  </script>
+</dom-module>

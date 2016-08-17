@@ -1,0 +1,235 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+    <link rel="import" href="../../elements.html">
+<dom-module id="blog-post">
+  <template>
+    <style>
+      html{
+      font-family: 'Roboto', 'Noto', sans-serif;
+
+}
+  
+    paper-scroll-header-panel {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-color: var(--paper-grey-200, #eee);
+
+      --paper-scroll-header-panel-full-header: {
+        background-image: url(http://v4.pingendo.com/assets/photos/business/photo-1.jpg);
+      };
+   
+      --paper-scroll-header-panel-condensed-header: {
+        background-color: #3F51B5;
+      };
+    }
+    paper-toolbar.tall {
+
+      height: 256px;
+    background-image: url(http://v4.pingendo.com/assets/photos/business/photo-1.jpg);
+    }
+    paper-toolbar.tall .title {
+      font-size: 40px;
+      margin-left: 60px;
+      -webkit-transform-origin: left center;
+      transform-origin: left center;
+    }
+    paper-icon-button {
+      --paper-icon-button-ink-color: white;
+    }
+    .content {
+      padding: 8px;
+    }
+    .spacer {
+      @apply(--layout-flex);
+    }
+
+   
+      iron-selector {
+        padding: 8px;
+      }
+      .horizontal-section {
+        padding: 0;
+      }
+      .iron-selected {
+        background-color: white;
+        color: black;
+      }
+.nav{
+  padding:10px;
+}
+.page{
+  background-color:#EEEEEE ;
+}
+#article-page{
+  width:100%;
+}
+#article-content{
+  width:100%;
+  height: 120%;
+}
+    </style>
+   <body class="fullbleed layout vertical" unresolved>
+
+    <neon-animatable>
+<paper-drawer-panel>
+  <paper-scroll-header-panel drawer>
+    <paper-toolbar>
+      <div>My Blog</div>
+    </paper-toolbar class="tall">
+    <div> 
+    <iron-selector selected="foo" attr-for-selected="name">
+            <div class="nav" onclick="viewblog()" name="foo">Blog Posts</div>
+            <div class="nav" onclick="viewabout()"  name="bar">About</div>
+            <div class="nav" onclick="viewcontact()" name="baz">Contact</div>
+           
+          </iron-selector>
+    </div>
+  </paper-scroll-header-panel>
+
+    <paper-scroll-header-panel main condenses header-height="256" condensed-header-height="64">
+
+    <paper-toolbar class="tall">
+
+<paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
+      
+      <div class="spacer"></div>
+  
+      <div class="bottom title">Blog</div>
+
+    </paper-toolbar>
+
+    <div class="content">
+
+  
+
+
+    
+    <iron-pages selected="0">
+  <div class="page">
+    
+<blog-post id="post1" heading="New House!" image="http://hookedonhouses.net/wp-content/uploads/2009/01/Father-of-the-Bride-Lookalike-house.jpg" preview="New house, new life," content="OMG I LOVE THIS ITS WORKING "onclick="openpost('post1')"></blog-post>
+
+
+
+  </div>
+  <div class="page" id="about">
+    
+<paper-card heading="About" image="http://placehold.it/350x150/FFC107/000000">
+  <div class="card-content">
+   Nothing here move along!
+  </div>
+ 
+</paper-card>
+
+  </div>
+  <div id="contact" class="page">
+    
+
+<paper-card heading="Contact" image="http://placehold.it/350x150/FFC107/000000">
+  <div class="card-content">
+ Email me or phone me!  </div>
+  <div class="card-actions">
+    <paper-button>Email</paper-button>
+    <paper-button>Phone</paper-button>
+  </div>
+</paper-card>
+
+
+  </div>
+
+
+</iron-pages>
+</neon-animatable>
+
+</div>
+<neon-animatable>
+<div id="article-page">
+
+<paper-card id="article-content" heading="" image="">
+<div class="card-content" id="card-content">
+  
+
+</div>
+</paper-card>
+
+</div>
+</neon-animatable>
+<script>
+function openpost(id){
+   var scope = document.querySelector('template[is="dom-bind"]');
+      scope.selected = 0;
+var blogpost= document.getElementById(id);
+
+var heading = blogpost.getAttribute("heading");
+var image = blogpost.getAttribute("image");
+var content = blogpost.getAttribute("content");
+var  post = document.getElementById("article-content");
+post.setAttribute("heading", heading);
+post.setAttribute("image", image);
+post.setAttribute("heading", heading);
+document.getElementById("card-content").innerHTML = content;
+
+        this.entryAnimation = 'slide-from-left-animation';
+        this.exitAnimation = 'slide-right-animation';
+        this.selected = this.selected === 0 ? 4 : (this.selected + 1);
+}
+
+    var pages = document.querySelector('iron-pages');
+     var drawer = document.querySelector('paper-drawer-panel');
+
+   
+
+
+  function viewblog(){
+ pages.select(0);
+ drawer.closeDrawer();
+  }
+  function viewabout(){
+   pages.select(1);  
+    drawer.closeDrawer();
+  }
+  function viewcontact(){
+     pages.select(2);
+      drawer.closeDrawer();
+  }
+</script>
+
+  </paper-scroll-header-panel>
+
+</paper-drawer-panel>
+
+
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'blog-post',
+
+      properties: {
+        heading:String,
+        image:String,
+        
+        onclick:String,
+        postid: String,
+        content: String,
+
+
+      },
+ready: function(){
+  var heading = this.heading;
+  var image = this.image;
+  var preview = this.preview;
+  var content = this.content;
+
+
+}
+    });
+    
+  </script>
+</dom-module>
+<blog-post></blog-post>
+
+

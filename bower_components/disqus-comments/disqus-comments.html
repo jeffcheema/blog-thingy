@@ -1,0 +1,86 @@
+<link rel="import" href="../polymer/polymer.html">
+<script src='//jeffcheema.disqus.com/embed.js'></script>
+<!--
+`disqus-comments`
+An element for disqus comments.
+
+@demo demo/index.html
+-->
+
+<dom-module id="disqus-comments">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+    </style>
+    <div id="disqus_thread"></div>
+
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'disqus-comments',
+
+      properties: {
+        /**
+      * Your shortname. I.E http://demo.disqus.com. `demo` would be your shortname.
+      */
+        shortname: {
+          type: String,
+observer:'changed',
+        },
+        /**
+      * Your pages unique identifier.
+      */
+        identifier:{
+          type: String,
+observer:'changed',
+        },
+        /**
+      * Current page URL
+      */
+
+        url:{
+type: String,
+observer:'changed',
+        },
+      },
+ready: function(){
+this.url = window.location.href;
+
+
+  var disqus_config = function () {
+      this.page.url = this.url;
+      this.page.identifier = this.identifier;
+  };
+
+
+      var d = document, s = d.createElement('script');
+
+      s.src = '//'+this.shortname+'.disqus.com/embed.js';
+
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+
+
+},
+changed:function(){
+
+  DISQUS.reset({
+  reload: true,
+  config: function () {
+    this.page.identifier = document.querySelector('blog-page').heading;
+    this.page.url = window.location.href;
+  }
+});
+
+},
+
+
+    });
+  </script>
+</dom-module>

@@ -1,0 +1,26 @@
+{
+  "name": "disqus-comments",
+  "description": "An element for disqus comments.",
+  "main": "disqus-comments.html",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.4.0",
+    "iron-component-page": "PolymerElements/iron-component-page#^1.1.7"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.0.0",
+    "web-component-tester": "^4.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
+  },
+  "homepage": "https://github.com/jeffcheema/disqus-comments",
+  "_release": "159b89d13c",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "159b89d13c100d97edf35ee297f2fdaaef3dae07"
+  },
+  "_source": "https://github.com/jeffcheema/disqus-comments.git",
+  "_target": "*",
+  "_originalSource": "DisqusComments",
+  "_direct": true
+}

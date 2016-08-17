@@ -1,0 +1,74 @@
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+    <link rel="import" href="../../elements.html">
+    <link rel="import" href="../../bower_components/neon-animation/neon-animatable-behavior.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/slide-from-left-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/fade-out-animation.html">
+<link rel="import" href="../../bower_components/disqus-comments/disqus-comments.html">
+  <script src="../../bower_components/page/page.js"></script>
+<dom-module id="blog-page">
+  <template>
+    <style>
+     paper-card{
+
+width:100%;
+         margin:  auto;
+  position: relative;
+
+         margin-top:11%;
+
+}
+img{
+width:100%;
+}
+
+    </style>
+
+<paper-card id="article-content" heading="{{heading}}" image="{{image}}">
+<div class="card-content" id="card-content">
+
+{{content}}
+
+</div>
+<div class="card-actions">
+
+<paper-material>
+
+
+</paper-material>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'blog-page',
+         properties: {
+        heading:{
+type: String,
+observer:'changed',
+        },
+        content:{
+type: String,
+
+        },
+        url: {
+type: String,
+
+        },
+title:{
+
+  type:String,
+},
+
+
+      },
+      changed: function(){
+
+
+      },
+    });
+
+  </script>
+</dom-module>
+
+<blog-page></blog-page>

@@ -1,0 +1,444 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-spinner/paper-spinner.html">
+<link rel="import" href="../../bower_components/disqus-comments/disqus-comments.html">
+<link rel="import" href="../../elements.html">
+<link rel="import" href="../blog.php">
+   <link rel="manifest" href="./manifest.json">
+<script src="config.js"></script>
+<link rel="import" href="../blog-contact.html">
+<link rel="import" href="../blog-page.html">
+<link rel="import" href="../blog-about.html">
+<script type="text/javascript" src="https://cdn.rawgit.com/showdownjs/showdown/1.0.0/dist/showdown.min.js"></script>
+  <script src="../../bower_components/page/page.js"></script>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<dom-module id="blog-template">
+  <template>
+<title>{{title}}</title>
+  <style>
+html{
+      font-family: 'Roboto', 'Noto', sans-serif;
+
+}
+
+#drawer{
+   font-family: 'Roboto', 'Noto', sans-serif;
+}
+  img {
+    width: 100%;
+}
+paper-card{
+width:100%;
+}
+
+
+    paper-scroll-header-panel {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+
+
+      --paper-scroll-header-panel-full-header: {
+background-color: white;
+      };
+
+      --paper-scroll-header-panel-condensed-header: {
+      background-color: white;
+      };
+    }
+    .paper-toolbar-0{
+background: white;
+color:black;
+text-align: center;
+
+
+    }
+    paper-toolbar {
+
+
+    --paper-toolbar-background: white; /* changes the background to blue*/
+    --paper-toolbar-color: white; /* changes the foreground color to green */
+    --paper-toolbar: {
+
+    };
+
+    }
+    paper-toolbar.tall .title {
+     background-color: white;
+
+      margin-left: 60px;
+      -webkit-transform-origin: left center;
+      transform-origin: left center;
+    }
+    .content {
+      padding: 8px;
+
+    }
+    .spacer {
+      @apply(--layout-flex);
+    }
+
+
+      iron-selector {
+        padding: 8px;
+      }
+      .horizontal-neon-animatable {
+        padding: 0;
+      }
+      .iron-selected {
+   color: black;
+        background-color: white;
+      }
+.nav{
+  padding:10px;
+}
+.page{
+
+}
+#article-page{
+width:100%;
+
+
+         margin:  auto;
+  position: relative;
+}
+blog-page{
+  width:100%;
+}
+
+  </style>
+
+ <script></script>
+
+<paper-drawer-panel force-narrow>
+  <paper-scroll-header-panel drawer id="drawer">
+  <paper-material elevation="1">
+    <paper-toolbar>
+      <div>My Blog</div>
+    </paper-toolbar>
+  </paper-material>
+    <div>
+    <iron-selector selected="{{selected}}" id="menu" >
+            <div class="nav" onclick="blog()" href="/"name="one">Blog Posts</div>
+            <div class="nav" onclick="about()" href="./about" name="two">About</div>
+            <div class="nav" onclick="contact()" href="./contact"name="three">Contact</div>
+
+          </iron-selector>
+    </div>
+  </paper-scroll-header-panel>
+
+    <paper-scroll-header-panel main condenses condensed-header-height="64">
+<paper-material elevation="1">
+    <paper-toolbar  id="toolbar">
+<div id="toggles">
+
+<paper-icon-button id="menu-toggle" icon="menu" paper-drawer-toggle></paper-icon-button>
+
+     </div>
+      <div class="spacer"></div>
+
+      <div class="bottom title">Blog</div>
+
+    </paper-toolbar>
+  </paper-material>
+    <div class="content">
+    <neon-animated-pages selected="{{selected}}" entry-animation="slide-from-left-animation" exit-animation="slide-right-animation">
+
+  <neon-animatable class="page">
+
+<blog-feed></blog-feed>
+  </neon-animatable>
+  <neon-animatable class="page" id="about">
+
+<blog-about></blog-about>
+
+  </neon-animatable>
+  <neon-animatable id="contact" class="page">
+
+<blog-contact></blog-contact>
+
+
+  </neon-animatable>
+
+<neon-animatable id="article-page">
+  <div id="loading">  <paper-spinner ></paper-spinner></div>
+
+<blog-page></blog-page>
+<div id="comments"></div>
+</neon-animatable>
+
+</neon-animated-pages>
+</div>
+<script>
+function back(){
+document.getElementById('menu-back').remove();
+        document.getElementById('toggles').innerHTML = "<paper-icon-button id='menu-toggle'icon='menu' paper-drawer-toggle></paper-icon-button>"
+         pages.select(0);
+          page('/');
+document.querySelector('title').innerHTML = blogtitle;
+};
+var allText;
+var lolll = "yayayaya";
+
+
+
+function getHTML(){
+
+
+}
+function blog(){
+  page("#!/");
+}
+function contact(){
+  page("/contact");
+}
+function about(){
+  page("/about");
+}
+function setpost(postid){
+  page("#!/blog-posts/"+ postid)
+
+  var toolbar = document.getElementById("toolbar");
+this.blogid= postid;
+document.querySelector('blog-template').openpost(postid);
+document.querySelector('blog-template').getMD(document.getElementById(postid).content);
+}
+
+
+
+
+
+
+
+    var pages = document.querySelector('neon-animated-pages');
+     var drawer = document.querySelector('paper-drawer-panel');
+
+
+
+var toggle = document.getElementById('menu-toggle');
+var arrow = document.getElementById('menu-back');
+
+
+
+</script>
+<script>
+
+
+
+</script>
+  </paper-scroll-header-panel>
+
+</paper-drawer-panel>
+
+
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'blog-template',
+
+      properties: {
+        selected: {
+          type: Number,
+          observer:"changed",
+          value: 0,
+        },
+        blogtitle: {
+          type: String,
+          value: "Blog",
+        },
+        md:{
+          type:String,
+        },
+        url:{
+          type:String,
+          value: window.location.href,
+        },
+        title:{
+          type:String,
+          value:blogtitle,
+        },
+        output:{
+          type:String,
+        },
+        alltext:{
+           type: Number,
+          observer:"text",
+        },
+        blogid:{
+type:String,
+value:"default",
+        },
+      },
+      text: function(){
+      document.querySelector('disqus-comments').changed();
+        document.querySelector('blog-page').content = getHTML(document.querySelector('blog-template').alltext);
+      },
+      ready: function(){
+
+document.querySelector('blog-template').getMD(document.querySelector('blog-post').content);
+
+console.log(this);
+  page('/', index);
+      page('/about', about);
+      page('/contact', contact);
+      page('/blog-posts/:id', open);
+
+
+      page({
+        hashbang:true
+      });
+      function notfound(){
+
+    var pages= document.querySelector("neon-animated-pages")
+pages.select(4);
+
+      }
+      function index() {
+
+                 var pages= document.querySelector("neon-animated-pages")
+pages.select(0);
+                   }
+      function about() {
+
+               var pages= document.querySelector("neon-animated-pages")
+pages.select(1);
+
+                    }
+      function contact() {
+
+                 var pages= document.querySelector("neon-animated-pages")
+pages.select(2);
+
+
+      }
+        function open(ctx) {
+        document.getElementById('toggles').innerHTML = "  <paper-icon-button onclick='back()' id='menu-back' icon='arrow-back'></paper-icon-button>"
+document.getElementById('toggles').innerHTML = "  <paper-icon-button onclick='back()'on-tap='titleset' id='menu-back' icon='arrow-back'></paper-icon-button>"
+     document.querySelector('blog-template').openpost(ctx.params.id);
+document.querySelector('blog-template').getMD(document.getElementById(ctx.params.id).content);
+      }
+
+      },
+      getHTML:function(textmd){
+        var converter = new showdown.Converter(),
+          text      = textmd,
+          html      = converter.makeHtml(text);
+      return html;
+
+      },
+      titleset:function(){
+        alert('hi');
+      },
+      getMD:function(idea){
+        var mdFile = new XMLHttpRequest();
+        mdFile.open("GET", idea, true);
+        mdFile.onreadystatechange = function() {
+          if (mdFile.readyState==4 && mdFile.status==200)
+   {
+document.getElementById("loading").innerHTML = ''; // Hide the image after the response from the server
+
+       }
+          if (mdFile.readyState === 4) {
+            if (mdFile.status === 200) {
+              document.querySelector('blog-template').alltext = mdFile.responseText;
+
+            return mdFile.responseText;
+              lines = mdFile.responseText.split("\n");
+            }
+            else{
+              return "file not found 404. ";
+            }
+          }
+        }
+        mdFile.send(null);
+      },
+      openpost: function(id){
+      var delay=0; //1 second
+
+setTimeout(function() {
+  //your code to be executed after 1 second
+
+        function removeExtension(filename){
+            var lastDotPosition = filename.lastIndexOf(".");
+            if (lastDotPosition === -1) return filename;
+            else return filename.substr(0, lastDotPosition);
+        }
+
+var blogpost= document.getElementById(id);
+
+
+var heading = blogpost.heading;
+this.title = heading;
+var image = blogpost.image;
+var content = blogpost.content;
+document.querySelector('blog-template').url = content;
+fullPath = content;
+var file = fullPath.replace(/^.*(\\|\/|\:)/, '');
+var filename = removeExtension(file);
+document.querySelector('blog-template').getMD(content);
+var html =document.querySelector('blog-template').getHTML();
+
+var  post = document.querySelector('blog-page');
+post.heading = filename;
+post.image = image;
+document.querySelector('blog-page').content = getHTML(document.querySelector('blog-template').alltext);
+/*while(document.querySelector('blog-template').getHTML(markdown) == undefined){
+console.log(document.querySelector('blog-template').getHTML(markdown));
+
+}*/
+if (document.querySelector('blog-template').getHTML(document.querySelector('blog-template').alltext)== undefined){
+  console.log('damn it');
+}
+else{
+document.getElementById("card-content").innerHTML = document.querySelector('blog-template').getHTML(document.querySelector('blog-template').alltext);
+}
+Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+}
+NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+}
+var toggle = document.getElementById('menu-toggle');
+var arrow = document.getElementById('menu-back');
+if (toggle==null){
+
+}
+else
+{
+  toggle.remove();
+}
+
+
+document.getElementById('toggles').innerHTML = "  <paper-icon-button onclick='back()'on-tap='titleset' id='menu-back' icon='arrow-back'></paper-icon-button>"
+ var pages= document.querySelector("neon-animated-pages")
+pages.select(3);
+
+
+}, delay);
+
+      },
+      back: function(){
+
+
+
+      },
+
+      changed: function(){
+     var drawer = document.querySelector('paper-drawer-panel');
+     drawer.closeDrawer();
+      document.getElementById('toggles').innerHTML = "<paper-icon-button id='menu-toggle' icon='menu' paper-drawer-toggle></paper-icon-button>"
+      }
+
+    });
+  </script>
+</dom-module>
+
+<blog-template></blog-template>
